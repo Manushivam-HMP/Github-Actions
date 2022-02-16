@@ -13,15 +13,15 @@ jobs:
         - name: Install modules
           run: yarn
 
-        - name: check Automation
-          run: yarn automation 
-
         - name: add labels
           uses: actions-ecosystem/action-add-labels@v1
           with:
             github_token: ${{ github.token }}
             labels: |
               Automation Failed
+
+        - name: check Automation
+          run: yarn automation 
 
   add-labels:
       runs-on: ubuntu-latest
