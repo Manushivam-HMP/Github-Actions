@@ -1,7 +1,11 @@
 # Run this workflow every time a pull request is created
 
 name: "Update Automation Success Label"
-on: label
+on: 
+  pull_request: 
+    types: 
+      - labeled 
+      - unlabeled
 jobs:
   check-labels:
       if: ${{ github.event.label.name != 'Automation Passes' }}
