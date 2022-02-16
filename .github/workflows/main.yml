@@ -7,7 +7,7 @@ jobs:
     steps:
     - name: Hello world action step
       id: hello
-      uses: Manushivam-HMP/Github-Actions@v1
+      uses: Manushivam-HMP/Github-Actions
       with:
         who-to-greet: 'Manushivam'
     # Use the output from the `hello` step
