@@ -1,7 +1,7 @@
 # Run this workflow every time a pull request is created
 
 name: "Add Automation Success Label"
-on: label
+on: pull_request
 jobs:
   add-labels:
       runs-on: ubuntu-latest
