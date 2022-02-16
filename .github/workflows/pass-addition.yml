@@ -12,4 +12,4 @@ jobs:
             github_token: ${{ github.token }}
             labels: |
               Automation Failed
-              UI
+              UI 
