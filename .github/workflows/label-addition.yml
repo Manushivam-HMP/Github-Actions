@@ -1,9 +1,12 @@
 # Run this workflow every time a pull request is created
 
 name: "Add Automation Success Label"
-on: pull_request
+on: 
+  pull_request:
+    types: [ labeled ]
 jobs:
   add-labels:
+      if: ${{ github.event.label.name == 'bug' }}
       runs-on: ubuntu-latest
       steps:
         - name: add labels
