@@ -13,6 +13,7 @@ jobs:
             labels: Automation Passes
 
   check-labels:
+      needs: add-labels
       if: ${{ github.event.label.name != 'Automation Passes' }}
       runs-on: ubuntu-latest
       steps:
