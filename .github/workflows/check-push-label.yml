@@ -17,13 +17,6 @@ jobs:
 
       - name: See result
         run: echo "${{ steps.check_pr_labels.outputs.result }}"
-  
-  job2:
-    runs-on: ubuntu-latest
-    needs: check_pr_labels_job
-    steps:
-    - run: echo ${{needs.check_pr_labels_job.outputs.output1}}
-
 
   check-labels:
       if: ${{ needs.check_pr_labels_job.outputs.output1 }}
