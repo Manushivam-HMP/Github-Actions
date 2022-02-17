@@ -22,5 +22,5 @@ jobs:
 
       - name: Start Automation
         if: ${{ steps.check_pr_labels.outputs.result }}
-        uses: .github/workflows/label-addition
+        uses: /.github/workflows/label-addition
   
