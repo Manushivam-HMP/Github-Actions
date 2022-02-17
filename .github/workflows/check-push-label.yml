@@ -40,7 +40,7 @@ jobs:
 
   success-labels:
       runs-on: ubuntu-latest
-      if: ${{ needs.run-automation.outputs.output1 }}
+      if: ${{ needs.run-automation.outputs.output1 == 'true' }}
       needs: run-automation
       steps:
         - name: Checkout code
@@ -52,18 +52,17 @@ jobs:
             github_token: ${{ github.token }}
             labels: |
               Automation Passes
-            number: ${{ github.event.pull_request.number }}
   
   fail-labels:
       runs-on: ubuntu-latest
-      if: ${{ !needs.run-automation.outputs.output1 }}
+      if: ${{ !needs.run-automation.outputs.output1 == 'false' }}
       needs: run-automation
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
 
         - name: add labels
-          uses: actions-ecosystem/action-remove-labels@v1
+          uses: actions-ecosystem/action-add-labels@v1
           with:
             github_token: ${{ github.token }}
             labels: |
