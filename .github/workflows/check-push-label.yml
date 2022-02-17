@@ -52,6 +52,7 @@ jobs:
             github_token: ${{ github.token }}
             labels: |
               Automation Failed
+            number: ${{ github.event.pull_request.number }}
 
         - name: add labels
           uses: actions-ecosystem/action-add-labels@v1
@@ -59,4 +60,6 @@ jobs:
             github_token: ${{ github.token }}
             labels: |
               Automation Passes
+            number: ${{ github.event.pull_request.number }}
+            
   
