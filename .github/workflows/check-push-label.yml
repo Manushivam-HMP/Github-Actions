@@ -18,7 +18,7 @@ jobs:
       - name: See result
         run: echo "${{ steps.check_pr_labels.outputs.result }}"
 
-  check-labels:
+  run-automation:
       if: ${{ needs.check_pr_labels_job.outputs.output1 }}
       needs: check_pr_labels_job
       runs-on: ubuntu-latest
@@ -32,16 +32,32 @@ jobs:
           id: automation
           run: echo "::set-output name=production::true"
   
-  job2:
+  echo-runned-automation:
     runs-on: ubuntu-latest
-    needs: check-labels
+    needs: run-automation
     steps:
-      - run: echo ${{needs.check-labels.outputs.output1}}
+      - run: echo ${{needs.run-automation.outputs.output1}}
 
-  add-labels:
+  success-labels:
       runs-on: ubuntu-latest
-      if: ${{ needs.check-labels.outputs.output1 }}
-      needs: check-labels
+      if: ${{ needs.run-automation.outputs.output1 }}
+      needs: run-automation
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: add labels
+          uses: actions-ecosystem/action-add-labels@v1
+          with:
+            github_token: ${{ github.token }}
+            labels: |
+              Automation Passes
+            number: ${{ github.event.pull_request.number }}
+  
+  fail-labels:
+      runs-on: ubuntu-latest
+      if: ${{ !needs.run-automation.outputs.output1 }}
+      needs: run-automation
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
@@ -52,14 +68,6 @@ jobs:
             github_token: ${{ github.token }}
             labels: |
               Automation Failed
-            number: ${{ github.event.pull_request.number }}
-
-        - name: add labels
-          uses: actions-ecosystem/action-add-labels@v1
-          with:
-            github_token: ${{ github.token }}
-            labels: |
-              Automation Passes
             number: ${{ github.event.pull_request.number }}
             
   
