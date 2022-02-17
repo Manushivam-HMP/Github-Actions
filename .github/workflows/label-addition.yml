@@ -22,7 +22,7 @@ jobs:
 
   success-labels:
       runs-on: ubuntu-latest
-      if: ${{ needs.run-automation.outputs.output1 == true }}
+      if: ${{ needs.run-automation.outputs.output1 == 'true' }}
       needs: run-automation
       steps:
         - name: Checkout code
@@ -37,7 +37,7 @@ jobs:
   
   fail-labels:
       runs-on: ubuntu-latest
-      if: ${{ needs.run-automation.outputs.output1 == false }}
+      if: ${{ needs.run-automation.outputs.output1 == 'false' }}
       needs: run-automation
       steps:
         - name: Checkout code
