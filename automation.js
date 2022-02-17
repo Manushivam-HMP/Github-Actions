@@ -1,6 +1,5 @@
 const automate = () => {
-    console.log("Failedddd Automation");
-    process.exit(1)
+    console.log("Success Automation");
 }
 
 automate();
