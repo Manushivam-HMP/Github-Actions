@@ -23,18 +23,14 @@ jobs:
       needs: check_pr_labels_job
       runs-on: ubuntu-latest
       outputs:
-        output1: ${{ steps.automation.outputs.test }}
+        output1: ${{ steps.automation.outputs.production }}
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
 
-        # Install the packasges
-        - name: Install modules 
-          run: yarn
-
-        - name: check Automation
+        - name: Run Automation
           id: automation
-          run: yarn automation 
+          run: echo "::set-output name=production::true"
   
   job2:
     runs-on: ubuntu-latest
