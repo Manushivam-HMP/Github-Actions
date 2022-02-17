@@ -22,6 +22,8 @@ jobs:
       if: ${{ needs.check_pr_labels_job.outputs.output1 }}
       needs: check_pr_labels_job
       runs-on: ubuntu-latest
+      outputs:
+        output1: ${{ steps.automation.outputs.test }}
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
@@ -30,18 +32,19 @@ jobs:
         - name: Install modules 
           run: yarn
 
-        - name: add labels
-          uses: actions-ecosystem/action-add-labels@v1
-          with:
-            github_token: ${{ github.token }}
-            labels: |
-              Automation Failed
-
         - name: check Automation
+          id: automation
           run: yarn automation 
+  
+  job2:
+    runs-on: ubuntu-latest
+    needs: check-labels
+    steps:
+      - run: echo ${{needs.check-labels.outputs.output1}}
 
   add-labels:
       runs-on: ubuntu-latest
+      if: ${{ needs.check-labels.outputs.output1 }}
       needs: check-labels
       steps:
         - name: Checkout code
