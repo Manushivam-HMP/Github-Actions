@@ -5,9 +5,10 @@ on:
   pull_request: 
     types: 
       - unlabeled
+      - labeled
 jobs:
   check-labels:
-      if: ${{ github.event.label.name == 'Automation Failed' }}
+      if: ${{ github.event.label.name == 'Automation Failed' || github.event.label.name == 'Ready For Review' }}
       runs-on: ubuntu-latest
       steps:
         - name: Checkout code
