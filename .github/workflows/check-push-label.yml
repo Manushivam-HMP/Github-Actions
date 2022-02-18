@@ -61,6 +61,6 @@ jobs:
             github_token: ${{ github.token }}
             labels: |
               Automation Failed
-            number: ${{ github.event.pull_request.number }}
+            number: ${{ github.event.pull_request.number }} 
             
   
