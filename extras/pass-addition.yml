@@ -1,0 +1,45 @@
+# Run this workflow every time a pull request is created
+
+name: "Add Automation Success Label"
+on: pull_request
+jobs:
+  check-automation:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        # Install the packasges
+        - name: Install modules
+          run: yarn
+
+        - name: add labels
+          uses: actions-ecosystem/action-add-labels@v1
+          with:
+            github_token: ${{ github.token }}
+            labels: |
+              Automation Failed
+
+        - name: check Automation
+          run: yarn automation 
+
+  add-labels:
+      runs-on: ubuntu-latest
+      needs: check-automation
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: add labels
+          uses: actions-ecosystem/action-remove-labels@v1
+          with:
+            github_token: ${{ github.token }}
+            labels: |
+              Automation Failed
+
+        - name: add labels
+          uses: actions-ecosystem/action-add-labels@v1
+          with:
+            github_token: ${{ github.token }}
+            labels: |
+              Automation Passes

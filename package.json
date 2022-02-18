@@ -1,0 +1,25 @@
+{
+  "name": "Github-Actions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "automation": "node ./automation.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manushivam-HMP/Github-Actions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Manushivam-HMP/Github-Actions/issues"
+  },
+  "homepage": "https://github.com/Manushivam-HMP/Github-Actions#readme",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0"
+  }
+}
