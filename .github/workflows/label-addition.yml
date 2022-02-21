@@ -10,42 +10,7 @@ jobs:
   run-automation:
       if: ${{ github.event.label.name == 'Automation Failed' || github.event.label.name == 'Ready For Review' }}
       runs-on: ubuntu-latest
-      outputs:
-        output1: ${{ steps.automation.outputs.production }}
       steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-
-        - name: Run Automation
-          id: automation
-          run: echo "::set-output name=production::false"
-
-  success-labels:
-      runs-on: ubuntu-latest
-      if: ${{ needs.run-automation.outputs.output1 == 'true' }}
-      needs: run-automation
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-
-        - name: add labels
-          uses: actions-ecosystem/action-add-labels@v1
-          with:
-            github_token: ${{ github.token }} 
-            labels: |
-              Automation Passes
-  
-  fail-labels:
-      runs-on: ubuntu-latest
-      if: ${{ needs.run-automation.outputs.output1 == 'false' }}
-      needs: run-automation
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-
-        - name: add labels
-          uses: actions-ecosystem/action-add-labels@v1
-          with:
-            github_token: ${{ github.token }}
-            labels: |
-              Automation Failed 
+        - uses: actions/checkout@v2
+        - uses: ./.github/workflows/github-action-sample
+        - run: echo "Action called goooooood!!"
