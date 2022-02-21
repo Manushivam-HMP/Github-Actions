@@ -17,7 +17,7 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Run Automation 1
-          uses: ./.github/workflows/github-action-sample
+          uses: ./.github/workflows/github-action-sample.yml
 
         - name: Run Automation 2
-          uses: ./.github/workflows/check-push-label
+          uses: ./.github/workflows/check-push-label.yml
