@@ -10,7 +10,14 @@ jobs:
   run-automation:
       if: ${{ github.event.label.name == 'Automation Failed' || github.event.label.name == 'Ready For Review' }}
       runs-on: ubuntu-latest
+      outputs:
+        output1: ${{ steps.automation.outputs.production }}
       steps:
-        - uses: actions/checkout@v2
-        - uses: ./.github/workflows/github-action-sample
-        - run: echo "Action called goooooood!!"
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Run Automation 1
+          uses: ./.github/workflows/github-action-sample
+
+        - name: Run Automation 2
+          uses: ./.github/workflows/check-push-label
