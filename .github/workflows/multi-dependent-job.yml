@@ -1,6 +1,12 @@
 name: "Multi level jobs Integration"
 
-on: push
+on: 
+  pull_request:
+    types:
+      - ready_for_review
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   check_pr_labels_job:
