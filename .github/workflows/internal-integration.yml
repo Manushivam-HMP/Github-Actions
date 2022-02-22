@@ -6,4 +6,4 @@ jobs:
      runs-on: ubuntu-latest
      steps: 
      - name: My first step
-       uses: ./.github/actions/check-push-label
+       uses: ./.github/workflows/check-push-label
