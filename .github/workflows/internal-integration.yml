@@ -9,4 +9,4 @@ jobs:
         with:
           ref: action1
       - name: My first step
-        uses: ./.github/actions/check-push-label
+        uses: ./.github/actions/check-push-label@master
