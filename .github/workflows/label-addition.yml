@@ -16,8 +16,21 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v2
 
-        - name: Run Automation 1
-          uses: Manushivam-HMP/Github-Actions/.github/workflows/github-action-sample
+        - name: Run Automation
+          id: automation
+          run: echo "::set-output name=production::false"
 
-        - name: Run Automation 2
-          uses: Manushivam-HMP/Github-Actions/.github/workflows/check-push-label
+  success-labels:
+      runs-on: ubuntu-latest
+      if: ${{ needs.run-automation.outputs.output1 == 'true' }}
+      needs: run-automation
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: add labels
+          uses: actions-ecosystem/action-add-labels@v1
+          with:
+            github_token: ${{ github.token }} 
+            labels: |
+              Automation Passes
