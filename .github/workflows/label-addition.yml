@@ -1,15 +1,14 @@
 # Run this workflow every time a pull request is created
 
-name: "Update Automation Success Label"
+name: "Ready For Review Checks"
 on: 
   pull_request: 
     types: 
-      - unlabeled
       - labeled
 jobs:
   run-automation:
-      if: ${{ github.event.label.name == 'Automation Failed' || github.event.label.name == 'Ready For Review' }}
       runs-on: ubuntu-latest
+      if: ${{ github.event.label.name == 'Ready For Review' }}
       outputs:
         output1: ${{ steps.automation.outputs.production }}
       steps:
@@ -18,19 +17,55 @@ jobs:
 
         - name: Run Automation
           id: automation
-          run: echo "::set-output name=production::false"
+          run: echo "::set-output name=production::true"
+
+  build_process_3:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'Ready For Review' }}
+    name: A Job That builds 3
+    steps:
+      - name: See result
+        run: |
+          echo "Hello build is running"
+          sleep 10
+  
+  build_process_4:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'Ready For Review' }}
+    name: A Job That builds 4
+    steps:
+      - name: See result
+        run: |
+          echo "Hello build is running"
+          sleep 10
+  
+  echo-runned-automation:
+    runs-on: ubuntu-latest
+    needs: [run-automation, build_process_3, build_process_4]
+    steps:
+      - run: echo ${{needs.run-automation.outputs.output1}}
 
   success-labels:
       runs-on: ubuntu-latest
       if: ${{ needs.run-automation.outputs.output1 == 'true' }}
-      needs: run-automation
+      needs: [run-automation, build_process_3, build_process_4]
       steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-
         - name: add labels
           uses: actions-ecosystem/action-add-labels@v1
           with:
-            github_token: ${{ github.token }} 
+            github_token: ${{ github.token }}
             labels: |
-              Automation Passes
+              Automation Passes 
+  
+  fail-labels:
+      runs-on: ubuntu-latest
+      if: ${{ !needs.run-automation.outputs.output1 == 'false' }}
+      needs: [run-automation, build_process_3, build_process_4]
+      steps:
+        - name: add labels
+          uses: actions-ecosystem/action-add-labels@v1
+          with:
+            github_token: ${{ github.token }}
+            labels: |
+              Automation Failed
+            number: ${{ github.event.pull_request.number }} 

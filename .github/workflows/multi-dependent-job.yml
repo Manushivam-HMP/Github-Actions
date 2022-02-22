@@ -107,7 +107,7 @@ jobs:
   
   fail-labels:
       runs-on: ubuntu-latest
-      if: ${{ !needs.run-automation.outputs.output1 == 'false' }}
+      if: ${{ needs.run-automation.outputs.output1 == 'false' }}
       needs: [run-automation, build_process_3, build_process_4]
       steps:
         - name: add labels
