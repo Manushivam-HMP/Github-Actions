@@ -47,6 +47,8 @@ jobs:
 
   run-automation:
       runs-on: ubuntu-latest
+      if: |
+        ${{ needs.check_pr_labels_job.outputs.output1 == 'true' }}
       needs: [check_pr_labels_job, build_process_1, build_process_2]
       outputs:
         output1: ${{ steps.automation.outputs.production }}
@@ -60,6 +62,8 @@ jobs:
 
   build_process_3:
     runs-on: ubuntu-latest
+    if: |
+        ${{ needs.check_pr_labels_job.outputs.output1 == 'true'  }}
     needs: [check_pr_labels_job, build_process_1, build_process_2]
     name: A Job That builds 3
     steps:
@@ -67,10 +71,11 @@ jobs:
         run: |
           echo "Hello build is running"
           sleep 10
-          exit 1
   
   build_process_4:
     runs-on: ubuntu-latest
+    if: |
+        ${{ needs.check_pr_labels_job.outputs.output1 == 'true' }}
     needs: [check_pr_labels_job, build_process_1, build_process_2]
     name: A Job That builds 4
     steps:
