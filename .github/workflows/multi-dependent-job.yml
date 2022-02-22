@@ -21,6 +21,7 @@ jobs:
   
   build_process_1:
     runs-on: ubuntu-latest
+    needs: check_pr_labels_job
     name: A Job That builds
     steps:
       - name: See result
@@ -30,6 +31,7 @@ jobs:
   
   build_process_2:
     runs-on: ubuntu-latest
+    needs: check_pr_labels_job
     name: A Job That builds
     steps:
       - name: See result
@@ -53,7 +55,7 @@ jobs:
 
   build_process_3:
     runs-on: ubuntu-latest
-    needs: [check_pr_labels_job, build_process_1, build_process_2]
+    needs: run-automation
     name: A Job That builds
     steps:
       - name: See result
@@ -63,7 +65,7 @@ jobs:
   
   build_process_4:
     runs-on: ubuntu-latest
-    needs: [check_pr_labels_job, build_process_1, build_process_2]
+    needs: run-automation
     name: A Job That builds
     steps:
       - name: See result
