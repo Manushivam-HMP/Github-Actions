@@ -5,5 +5,8 @@ jobs:
   my_first_job:
      runs-on: ubuntu-latest
      steps: 
-     - name: My first step
-       uses: ./.github/workflows/check-push-label
+      - uses: actions/checkout@v2
+        with:
+          ref: action1
+      - name: My first step
+        uses: ./.github/workflows/check-push-label
