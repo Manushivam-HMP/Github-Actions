@@ -1,12 +1,7 @@
 name: "Multi level jobs Integration"
 
 on: 
-  pull_request:
-    types:
-      - ready_for_review
-      - opened
-      - synchronize
-      - reopened
+  push
 
 jobs:
   check_pr_labels_job:
@@ -41,28 +36,20 @@ jobs:
   build_process_1:
     runs-on: ubuntu-latest
     name: A Job That builds 1
-    outputs:
-      output1: ${{ steps.build_process_1.outputs.production }}
     steps:
       - name: See result
         run: |
           echo "Hello build is running"
           sleep 10 
-      - name: See result
-        run: echo "::set-output name=production::true"
   
   build_process_2:
     runs-on: ubuntu-latest
     name: A Job That builds 2
-    outputs:
-      output1: ${{ steps.build_process_2.outputs.production }}
     steps:
       - name: See result
         run: |
           echo "Hello build is running"
           sleep 10
-      - name: See result
-        run: echo "::set-output name=production::true"
 
   run-automation:
       runs-on: ubuntu-latest
@@ -76,10 +63,10 @@ jobs:
 
         - name: Run Automation
           id: automation
-          run: echo "::set-output name=production::true"
+          run: echo "::set-output name=production::false"
 
         - name: attach failure label
-          if: steps.run-automation.outputs.production == 'false'
+          if: steps.automation.outputs.production == 'false'
           uses: actions-ecosystem/action-add-labels@v1
           with:
             github_token: ${{ github.token }}
@@ -87,7 +74,7 @@ jobs:
               Automation Failed
         
         - name: Check Result value
-          if: steps.run-automation.outputs.production == 'false'
+          if: steps.automation.outputs.production == 'false'
           id: finalResult
           run: exit 1
 
