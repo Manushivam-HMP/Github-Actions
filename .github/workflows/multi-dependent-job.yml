@@ -24,6 +24,10 @@ jobs:
 
       - name: See result
         run: echo "${{ steps.check_pr_labels.outputs.result }}"
+      
+      - name: Check Result value
+        if: ${{ steps.check_pr_labels.outputs.result == 'false' }}
+        run: exit 1
   
   build_process_1:
     runs-on: ubuntu-latest
