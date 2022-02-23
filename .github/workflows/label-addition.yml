@@ -25,7 +25,7 @@ jobs:
 
         - name: Run Automation
           id: automation
-          run: echo "::set-output name=production::true"
+          run: echo "::set-output name=production::false"
 
         - name: attach failure label
           if: steps.automation.outputs.production == 'false'
@@ -48,7 +48,7 @@ jobs:
       - name: See result
         run: |
           echo "Hello build is running"
-          sleep 10
+          sleep 2
   
   build_process_4:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
       - name: See result
         run: |
           echo "Hello build is running"
-          sleep 10
+          sleep 2
   
   success-labels:
     name: Final Results
