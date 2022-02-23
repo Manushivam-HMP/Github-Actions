@@ -19,6 +19,19 @@ jobs:
           id: automation
           run: echo "::set-output name=production::true"
 
+        - name: attach failure label
+          if: steps.automation.outputs.production == 'false'
+          uses: actions-ecosystem/action-add-labels@v1
+          with:
+            github_token: ${{ github.token }}
+            labels: |
+              Automation Failed
+        
+        - name: Check Result value
+          if: steps.automation.outputs.production == 'false'
+          id: finalResult
+          run: exit 1
+
   build_process_3:
     runs-on: ubuntu-latest
     if: ${{ github.event.label.name == 'Ready For Review' }}
@@ -39,33 +52,14 @@ jobs:
           echo "Hello build is running"
           sleep 10
   
-  echo-runned-automation:
+  success-labels:
+    name: Final Results
     runs-on: ubuntu-latest
     needs: [run-automation, build_process_3, build_process_4]
     steps:
-      - run: echo ${{needs.run-automation.outputs.output1}}
-
-  success-labels:
-      runs-on: ubuntu-latest
-      if: ${{ needs.run-automation.outputs.output1 == 'true' }}
-      needs: [run-automation, build_process_3, build_process_4]
-      steps:
-        - name: add labels
-          uses: actions-ecosystem/action-add-labels@v1
-          with:
-            github_token: ${{ github.token }}
-            labels: |
-              Automation Passes 
-  
-  fail-labels:
-      runs-on: ubuntu-latest
-      if: ${{ !needs.run-automation.outputs.output1 == 'false' }}
-      needs: [run-automation, build_process_3, build_process_4]
-      steps:
-        - name: add labels
-          uses: actions-ecosystem/action-add-labels@v1
-          with:
-            github_token: ${{ github.token }}
-            labels: |
-              Automation Failed
-            number: ${{ github.event.pull_request.number }} 
+      - name: add labels
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ github.token }}
+          labels: |
+            Automation Passes  
