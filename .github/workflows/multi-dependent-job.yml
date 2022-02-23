@@ -1,7 +1,8 @@
 name: "Multi level jobs Integration"
 
 on: 
-  push
+  pull_request:
+    
 
 jobs:
   check_pr_labels_job:
