@@ -15,6 +15,14 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v2
 
+        - name: Remove Useless labels
+          uses: actions-ecosystem/action-remove-labels@v1
+          with:
+            github_token: ${{ github.token }}
+            labels: |
+              Automation Failed
+              Automation Passes
+
         - name: Run Automation
           id: automation
           run: echo "::set-output name=production::true"
