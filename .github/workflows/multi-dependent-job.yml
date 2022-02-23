@@ -58,14 +58,11 @@ jobs:
       outputs:
         output1: ${{ steps.automation.outputs.production }}
       steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-
         - name: Run Automation
           id: automation
           run: echo "::set-output name=production::false"
 
-        - name: attach failure label
+        - name: Attach failure label
           if: steps.automation.outputs.production == 'false'
           uses: actions-ecosystem/action-add-labels@v1
           with:
