@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: See result
         run: |
-          echo "Hello build is running"
+          echo "Hello build is running" 
           sleep 2
       - name: See result
         run: echo "::set-output name=production::true"
