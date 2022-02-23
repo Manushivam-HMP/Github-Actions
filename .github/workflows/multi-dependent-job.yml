@@ -34,7 +34,7 @@ jobs:
       - name: See result
         run: |
           echo "Hello build is running"
-          sleep 10
+          sleep 10 
       - name: See result
         run: echo "::set-output name=production::true"
   
