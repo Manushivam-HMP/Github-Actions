@@ -4,11 +4,11 @@ name: "Ready For Review Checks"
 on: 
   pull_request: 
     types: 
-      - labeled
+      - unlabeled
 jobs:
   run-automation:
+      if: ${{ github.event.label.name == 'Automation Failed' }}
       runs-on: ubuntu-latest
-      if: ${{ github.event.label.name == 'Ready For Review' }}
       outputs:
         output1: ${{ steps.automation.outputs.production }}
       steps:
@@ -68,4 +68,4 @@ jobs:
             github_token: ${{ github.token }}
             labels: |
               Automation Failed
-            number: ${{ github.event.pull_request.number }} 
+            number: ${{ github.event.pull_request.number }}
