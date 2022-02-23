@@ -1,7 +1,7 @@
 name: "Multi level jobs Integration"
 
 on: 
-  pull_request:
+  push
     
 
 jobs:
@@ -20,13 +20,6 @@ jobs:
 
       - name: See result
         run: echo "${{ steps.check_pr_labels.outputs.result }}"
-      
-      - name: Attach failure label
-        if: steps.check_pr_labels.outputs.result == 'false'
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: ${{ github.token }}
-          labels: Automation Failed
       
       - name: Check Result value
         if: steps.check_pr_labels.outputs.result == 'false'
