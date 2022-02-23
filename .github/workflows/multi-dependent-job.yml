@@ -64,7 +64,7 @@ jobs:
 
         - name: Run Automation
           id: automation
-          run: echo "::set-output name=production::false"
+          run: echo "::set-output name=production::true"
 
         - name: Attach failure label
           if: steps.automation.outputs.production == 'false'
