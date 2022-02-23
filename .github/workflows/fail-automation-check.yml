@@ -21,7 +21,7 @@ jobs:
 
   build_process_3:
     runs-on: ubuntu-latest
-    if: ${{ github.event.label.name == 'Ready For Review' }}
+    if: ${{ github.event.label.name == 'Automation Failed' }}
     name: A Job That builds 3
     steps:
       - name: See result
@@ -31,7 +31,7 @@ jobs:
   
   build_process_4:
     runs-on: ubuntu-latest
-    if: ${{ github.event.label.name == 'Ready For Review' }}
+    if: ${{ github.event.label.name == 'Automation Failed' }}
     name: A Job That builds 4
     steps:
       - name: See result
